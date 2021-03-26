@@ -31,9 +31,8 @@ public class OrderService { // Spring Bean:An object having special annotations 
 		orderRepository.save(order);
 	}
 
-	public String deleteOrder(int orderId) {
-		System.out.println("order deleted");
-		return "order deleted";
+	public void deleteOrder(String orderId) {
+		orderRepository.deleteById(orderId);
 	}
 
 	public Optional<Order> getOrder(String orderId) {

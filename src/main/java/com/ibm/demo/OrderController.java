@@ -69,9 +69,8 @@ public class OrderController {
 	}
 
 	@DeleteMapping("/order/{id}")
-	String deleteOrder(@PathVariable("id") int orderId, HttpRequest httpRequest) {
-		System.out.println(httpRequest.getHeaders());
+	void deleteOrder(@PathVariable("id") String orderId) {
 		System.out.println(orderId);
-		return orderService.deleteOrder(orderId);
+		orderService.deleteOrder(orderId);
 	}
 }
