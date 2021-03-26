@@ -7,7 +7,7 @@ import org.springframework.data.annotation.Id;
 
 public class Order {
 
-	@NotNull
+	//@NotNull
 	@NotBlank
 	private String item;
 	@NotNull

@@ -1,6 +1,7 @@
 package com.ibm.demo;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ibm.demo.entity.Order;
 import com.ibm.demo.service.OrderService;
 
+
 @RestController
 public class OrderController {
 	@Autowired // Spring automatically performs injection
@@ -39,10 +41,17 @@ public class OrderController {
 	List<Order> getOrders() {
 		return orderService.getOrders();
 	}
+	
+	/**
+	 * method to search orderId
+	 * @param orderId
+	 * @return zero or matching id
+	 */
 
 	@GetMapping("/order/{id}")
-	Order getOrder(@PathVariable("id") int orderId) {
-		return orderService.getOrder(orderId);
+	Optional<Order> getOrder(@PathVariable("id") String orderId) {
+		return orderService.getOrder(orderId); //to obtain all the orders as an array
+												//for single order, provide object id in the url
 	}
 
 	private void validateModel(Errors bindingResult) {
@@ -52,10 +61,11 @@ public class OrderController {
 	}
 
 	@PutMapping("/order/{id}")
-	String updateOrder(@RequestBody @Valid Order order, BindingResult bindingResult, @PathVariable("id") int orderId) {
+	void updateOrder(@RequestBody @Valid Order order, BindingResult bindingResult, @PathVariable("id") String orderId) {
 		validateModel(bindingResult);
 		System.out.println(orderId);
-		return orderService.updateOrder(orderId);
+		order.setId(orderId);
+		orderService.updateOrder(order);
 	}
 
 	@DeleteMapping("/order/{id}")

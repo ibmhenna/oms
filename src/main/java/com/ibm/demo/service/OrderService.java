@@ -1,7 +1,7 @@
 package com.ibm.demo.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,25 +20,24 @@ public class OrderService { // Spring Bean:An object having special annotations 
 	}
 
 	public List<Order> getOrders() {
-		return new ArrayList<Order>();
+		return orderRepository.findAll();
 	}
 
 	public String getOrder() {
 		return "order1";
 	}
 
-	public String updateOrder(int orderId) {
-		return "order updated";
+	public void updateOrder(Order order) {
+		orderRepository.save(order);
 	}
 
 	public String deleteOrder(int orderId) {
 		System.out.println("order deleted");
-		;
 		return "order deleted";
 	}
 
-	public Order getOrder(int orderId) {
-		return new Order();
+	public Optional<Order> getOrder(String orderId) {
+		return orderRepository.findById(orderId);
 	}
 
 }
